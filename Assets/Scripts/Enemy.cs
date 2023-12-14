@@ -1,7 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using TreeEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,21 +6,23 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    private NavMeshAgent _navMeshAgent;
+    public Transform bodytrans;
+
+    public NavMeshAgent _navMeshAgent;
     public bool canSeePlayer;
     
     public GameObject playerRef;
-    
+
+    public Animator Animator;
     
     public LayerMask targetMask;
     public LayerMask obstructionMask;
 
-    [SerializeField, Range(0,5f)] public float radius;
+    [SerializeField, Range(0,10f)] public float radius;
     [SerializeField,Range(0, 360f)] public float angle;
 
     void Start()
     {
-        _navMeshAgent = transform.parent.GetComponent<NavMeshAgent>();
         playerRef = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(FOVRoutine());
     }
@@ -47,6 +46,7 @@ public class Enemy : MonoBehaviour
 
     private void check()
     {
+        Animator.SetFloat("Velocity", _navMeshAgent.velocity.magnitude);
         Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
 
         if (rangeChecks.Length != 0)
@@ -60,29 +60,33 @@ public class Enemy : MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
                 {
-                    _navMeshAgent.speed = 3f;
+                    _navMeshAgent.speed = 3.5f;   
                     canSeePlayer = true;
                     _navMeshAgent.destination = target.position;
                     transform.LookAt(target);
                     angle = 360f;
+                    radius = 10f;
                 }
 
                 else
                 {
                     canSeePlayer = false;
                     angle = 60f;
+                    radius = 4f;
                 }
             }
             else
             {
                 canSeePlayer = false;
                 angle = 60f;
+                radius = 4f;
             }
         }
         else if (canSeePlayer)
         {
             canSeePlayer = false;
             angle = 60f;
+            radius = 4f;
         }
     }
 }

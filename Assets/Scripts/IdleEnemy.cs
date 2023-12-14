@@ -7,7 +7,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class IdleEnemy : MonoBehaviour
 {
-    private Enemy _enemyScript;
+    public Enemy _enemyScript;
     private Vector3 start_pos;
     private Quaternion rotation;
     private float timer;
@@ -19,7 +19,6 @@ public class IdleEnemy : MonoBehaviour
         start_pos = transform.position;
         rotation = transform.rotation;
         Debug.Log(start_pos);
-        _enemyScript = transform.GetChild(0).GetComponent<Enemy>();
         _agent = GetComponent<NavMeshAgent>();
     }
 
@@ -41,7 +40,7 @@ public class IdleEnemy : MonoBehaviour
 
         if (transform.position == start_pos && transform.rotation != rotation)
         {
-            transform.rotation=Quaternion.Lerp(transform.rotation, rotation, 0.05f);
+            transform.rotation=Quaternion.Lerp(transform.rotation, rotation, 0.005f);
         }
         
     }
