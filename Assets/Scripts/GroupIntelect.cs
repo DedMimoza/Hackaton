@@ -44,12 +44,15 @@ public class GroupIntelect : MonoBehaviour
                 if (collider.CompareTag("Enemy"))
                 {
                     Debug.Log(collider.name);
-                    if (collider.GetComponent<Enemy>().canSeePlayer)
+                    if (collider.name != "General5")
                     {
-                        _enemy.canSeePlayer = true;
-                        _enemy._navMeshAgent.destination = collider.transform.position +
-                                                           new Vector3(UnityEngine.Random.Range(0.2f, 0.5f), 0,
-                                                               UnityEngine.Random.Range(0.2f, 0.5f));
+                        if (collider.GetComponent<Enemy>().canSeePlayer)
+                        {
+                            _enemy.canSeePlayer = true;
+                            _enemy._navMeshAgent.destination = collider.transform.position +
+                                                               new Vector3(UnityEngine.Random.Range(0.2f, 0.5f), 0,
+                                                                   UnityEngine.Random.Range(0.2f, 0.5f));
+                        }
                     }
                 }
 
