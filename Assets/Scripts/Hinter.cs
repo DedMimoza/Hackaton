@@ -6,12 +6,9 @@ public class Hinter : MonoBehaviour
 {
     public LayerMask mask;
     [SerializeField, Range(0,10f)] public float radius;
-
-    private Animator _animator;
     void Start()
     {
         StartCoroutine(CheckerRout());
-        _animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -41,19 +38,12 @@ public class Hinter : MonoBehaviour
             {
                 if (collider.CompareTag("Enemy"))
                 {
-                    if (Input.GetKey(KeyCode.F))
-                    {
-                        _animator.SetTrigger("Hit");
-                        collider.gameObject.GetComponent<Failture>().Die();
-                    }
+                    //activate button kill
                 }
 
                 if (collider.CompareTag("Doks"))
                 {
-                    if (Input.GetKey(KeyCode.F))
-                    {
-                        Destroy(collider.gameObject);
-                    }
+                    //activate button grab
                 }
             }
         }
