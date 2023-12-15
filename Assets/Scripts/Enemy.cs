@@ -25,11 +25,16 @@ public class Enemy : MonoBehaviour
 
     private Character comoponentOfMainHero;
 
+    //Sound
+    SoundActivator soundActivator;
+
     void Start()
     {
         playerRef = GameObject.FindGameObjectWithTag("Player");
         comoponentOfMainHero = playerRef.GetComponent<Character>();
         StartCoroutine(FOVRoutine());
+
+        soundActivator = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<SoundActivator>();
     }
 
     // Update is called once per frame
@@ -73,6 +78,8 @@ public class Enemy : MonoBehaviour
                     angle = 360f;
                     radius = 10f;
                     IdleEnemy.start_pos = transform.position;
+
+                    soundActivator.SwapMusic(danger.activeSelf);
                 }
 
                 else
@@ -81,6 +88,8 @@ public class Enemy : MonoBehaviour
                     canSeePlayer = false;
                     angle = 60f;
                     radius = comoponentOfMainHero.speed < 3 ? 3f : 5f;
+
+                    soundActivator.SwapMusic(danger.activeSelf);
                 }
             }
             else
