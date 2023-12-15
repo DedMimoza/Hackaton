@@ -25,8 +25,16 @@ public class Enemy : MonoBehaviour
 
     private Character comoponentOfMainHero;
 
+
+    //Sound
+    public GameObject sm;
+    public SoundActivator soundActivator;
+
     void Start()
     {
+        //sm = GameObject.FindGameObjectWithTag("SoundManager");
+        soundActivator = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<SoundActivator>();
+
         playerRef = GameObject.FindGameObjectWithTag("Player");
         comoponentOfMainHero = playerRef.GetComponent<Character>();
         StartCoroutine(FOVRoutine());
@@ -73,6 +81,8 @@ public class Enemy : MonoBehaviour
                     angle = 360f;
                     radius = 10f;
                     IdleEnemy.start_pos = transform.position;
+
+                    soundActivator.SwapSound(true);
                 }
 
                 else
@@ -81,6 +91,7 @@ public class Enemy : MonoBehaviour
                     canSeePlayer = false;
                     angle = 60f;
                     radius = comoponentOfMainHero.speed < 3 ? 3f : 5f;
+                    StartCoroutine(SwapMusicClips());
                 }
             }
             else
@@ -89,6 +100,8 @@ public class Enemy : MonoBehaviour
                 canSeePlayer = false;
                 angle = 60f;
                 radius = comoponentOfMainHero.speed < 3 ? 3f : 5f;
+
+                
             }
         }
         else if (canSeePlayer)
@@ -97,6 +110,13 @@ public class Enemy : MonoBehaviour
             canSeePlayer = false;
             angle = 60f;
             radius = comoponentOfMainHero.speed < 3 ? 3f : 5f;
+
+            
         }
+    }
+    IEnumerator SwapMusicClips()
+    {
+        yield return new WaitForSeconds(4f);
+        soundActivator.SwapSound(false);
     }
 }
