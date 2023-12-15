@@ -8,7 +8,20 @@ using UnityEngine.AI;
 public class IdleEnemy : MonoBehaviour
 {
     public Enemy _enemyScript;
-    private Vector3 start_pos;
+    private Vector3 _start_pos = Vector3.zero;
+    public Vector3 start_pos
+    {
+        get
+        {
+            return _start_pos;
+        }
+        set
+    {
+        if (_start_pos == Vector3.zero)
+        {
+            _start_pos = value;
+        }
+    } }
     private Quaternion rotation;
     private float timer;
     private NavMeshAgent _agent;
@@ -16,9 +29,8 @@ public class IdleEnemy : MonoBehaviour
     private void Start()
     {
         
-        start_pos = transform.position;
         rotation = transform.rotation;
-        Debug.Log(start_pos);
+
         _agent = GetComponent<NavMeshAgent>();
     }
 

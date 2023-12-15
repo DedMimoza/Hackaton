@@ -8,7 +8,7 @@ public class Character : MonoBehaviour
 {
     private CharacterController _characterController;
     private Animator _animator;
-    [SerializeField, Range(1f,5f)] private float speed;
+    [SerializeField, Range(1f,5f)] public float speed;
     public float rotatoinSpeed;
     void Start()
     {
@@ -40,7 +40,7 @@ public class Character : MonoBehaviour
         Vector3 movmentDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         
         _characterController.Move(Vector3.down * 9.8f*Time.deltaTime);
-        _characterController.Move(movmentDirection * speed*Time.deltaTime);
+        _characterController.Move(movmentDirection * -speed*Time.deltaTime);
 
 
         
@@ -50,7 +50,7 @@ public class Character : MonoBehaviour
 
         if (movmentDirection != Vector3.zero)
         {
-            Quaternion toRotation = Quaternion.LookRotation(movmentDirection,Vector3.up);
+            Quaternion toRotation = Quaternion.LookRotation(-movmentDirection,Vector3.up);
             transform.rotation=Quaternion.RotateTowards(transform.rotation,toRotation,rotatoinSpeed* Time.deltaTime);
         }
         

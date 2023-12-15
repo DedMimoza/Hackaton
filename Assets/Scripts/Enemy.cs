@@ -1,12 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-
+using TMPro;
 
 
 public class Enemy : MonoBehaviour
 {
-    public Transform bodytrans;
+    public GameObject danger;
 
     public NavMeshAgent _navMeshAgent;
     public bool canSeePlayer;
@@ -14,6 +14,8 @@ public class Enemy : MonoBehaviour
     public GameObject playerRef;
 
     public Animator Animator;
+
+    public IdleEnemy IdleEnemy;
     
     public LayerMask targetMask;
     public LayerMask obstructionMask;
@@ -21,9 +23,12 @@ public class Enemy : MonoBehaviour
     [SerializeField, Range(0,10f)] public float radius;
     [SerializeField,Range(0, 360f)] public float angle;
 
+    private Character comoponentOfMainHero;
+
     void Start()
     {
         playerRef = GameObject.FindGameObjectWithTag("Player");
+        comoponentOfMainHero = playerRef.GetComponent<Character>();
         StartCoroutine(FOVRoutine());
     }
 
@@ -60,33 +65,38 @@ public class Enemy : MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
                 {
+                     danger.SetActive(true);
                     _navMeshAgent.speed = 3.5f;   
                     canSeePlayer = true;
                     _navMeshAgent.destination = target.position;
                     transform.LookAt(target);
                     angle = 360f;
                     radius = 10f;
+                    IdleEnemy.start_pos = transform.position;
                 }
 
                 else
                 {
+                    danger.SetActive(false);
                     canSeePlayer = false;
                     angle = 60f;
-                    radius = 4f;
+                    radius = comoponentOfMainHero.speed < 3 ? 3f : 5f;
                 }
             }
             else
             {
+                danger.SetActive(false);
                 canSeePlayer = false;
                 angle = 60f;
-                radius = 4f;
+                radius = comoponentOfMainHero.speed < 3 ? 3f : 5f;
             }
         }
         else if (canSeePlayer)
         {
+            danger.SetActive(false);
             canSeePlayer = false;
             angle = 60f;
-            radius = 4f;
+            radius = comoponentOfMainHero.speed < 3 ? 3f : 5f;
         }
     }
 }
