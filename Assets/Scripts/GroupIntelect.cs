@@ -1,23 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = System.Random;
 
-public class Hinter : MonoBehaviour
+public class GroupIntelect : MonoBehaviour
 {
-    public LayerMask mask;
-    [SerializeField, Range(0,10f)] public float radius;
+    [SerializeField]
+    private float radius;
 
-    private Animator _animator;
+    public LayerMask mask;
+
+    private Enemy _enemy;
     void Start()
     {
-        StartCoroutine(CheckerRout());
-        _animator = GetComponent<Animator>();
+        _enemy = GetComponent<Enemy>();
+        StartCoroutine("CheckerRout");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
         
     }
     
@@ -41,20 +43,16 @@ public class Hinter : MonoBehaviour
             {
                 if (collider.CompareTag("Enemy"))
                 {
-                    if (Input.GetKey(KeyCode.F))
+                    Debug.Log(collider.name);
+                    if (collider.GetComponent<Enemy>().canSeePlayer)
                     {
-                        _animator.SetTrigger("Hit");
-                        collider.gameObject.GetComponent<Failture>().Die();
+                        _enemy.canSeePlayer = true;
+                        _enemy._navMeshAgent.destination = collider.transform.position +
+                                                           new Vector3(UnityEngine.Random.Range(0.2f, 0.5f), 0,
+                                                               UnityEngine.Random.Range(0.2f, 0.5f));
                     }
                 }
 
-                if (collider.CompareTag("Doks"))
-                {
-                    if (Input.GetKey(KeyCode.F))
-                    {
-                        Destroy(collider.gameObject);
-                    }
-                }
             }
         }
     }
