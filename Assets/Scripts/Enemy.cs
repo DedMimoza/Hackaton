@@ -35,6 +35,7 @@ public class Enemy : MonoBehaviour
         StartCoroutine(FOVRoutine());
 
         soundActivator = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<SoundActivator>();
+        soundActivator.isPhone = true;
     }
 
     // Update is called once per frame

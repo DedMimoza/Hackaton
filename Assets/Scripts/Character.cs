@@ -10,12 +10,22 @@ public class Character : MonoBehaviour
     private Animator _animator;
     [SerializeField, Range(1f,5f)] public float speed;
     public float rotatoinSpeed;
+
+    //Sound
+    SoundActivator soundActivator;
     void Start()
     {
+        soundActivator = GetComponent<SoundActivator>();
+        soundActivator.isPhone = false;
+
         _animator = GetComponent<Animator>();
         _characterController = GetComponent<CharacterController>();
     }
 
+    
+
+
+    
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -23,14 +33,17 @@ public class Character : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             speed = 5f;
+            soundActivator.SwapMusic(true);
         }
         else if (Input.GetKey(KeyCode.C))
         {
             speed = 1.5f;
+            soundActivator.SwapMusic(false);
         }
         else
         {
             speed = 3f;
+            soundActivator.SwapMusic(false);
         }
     }
 
@@ -65,5 +78,9 @@ public class Character : MonoBehaviour
         Debug.Log(horizontalSpeed);
         _animator.SetFloat("Speed", horizontalSpeed);
 
+
+        if (horizontalSpeed > 0f) soundActivator.PlaySoundMove();
+        else soundActivator.StopMusic();
+        
     }
 }
