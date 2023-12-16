@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/MainScene.unity
     guid: 3ea43141e45531746bc7a5d937395cb4
   - enabled: 1
+    path: Assets/CatS/Cat.unity
+    guid: c7a34fe81623ff64da555204eb610bce
+  - enabled: 1
     path: Assets/OutdoorsScene.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
   m_configObjects: {}
