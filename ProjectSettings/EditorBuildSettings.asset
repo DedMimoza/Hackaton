@@ -14,4 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/OutdoorsScene.unity
     guid: 8124e5870f4fd4c779e7a5f994e84ad1
+  - enabled: 1
+    path: Assets/CatS/CatBadFinal.unity
+    guid: eaccc081585da6f449eb23dd4773253f
+  - enabled: 1
+    path: Assets/CatS/CatGoodFinal.unity
+    guid: 74852570b9697c84b845f497c50aad26
+  - enabled: 1
+    path: Assets/CatS/CatNeitralFinal.unity
+    guid: e03b7288094f56f4890d2fb32a8f5047
   m_configObjects: {}

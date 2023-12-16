@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Hinter : MonoBehaviour
 {
@@ -53,9 +54,15 @@ public class Hinter : MonoBehaviour
                     if (Input.GetKey(KeyCode.F))
                     {
                         Destroy(collider.gameObject);
+                        StartCoroutine(END());
                     }
                 }
             }
         }
+    }
+    IEnumerator END()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(4);
     }
 }
