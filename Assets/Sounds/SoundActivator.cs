@@ -23,8 +23,22 @@ public class SoundActivator : MonoBehaviour
     }
     public void SwapMusic(bool isDanger)
     {
-        if (isDanger) music.clip = sounds[0];
-        else music.clip = sounds[1];
+        if (isPhone)
+        {
+            if (gameObject.name == "SoundManager")
+            {
+                Debug.Log(music.clip.name);
+                if (isDanger && music.clip.name != sounds[0].name)
+                {
+                    music.clip = sounds[0];
+                }
+                else if (!isDanger)
+                {
+                    music.clip = sounds[1];
+                }
+            }
+        }
+
     }
     public void PlaySoundMove()
     {

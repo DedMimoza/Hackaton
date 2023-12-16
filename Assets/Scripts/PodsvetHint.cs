@@ -5,7 +5,7 @@ using UnityEngine;
 public class PodsvetHint : MonoBehaviour
 {
     
-    private GameObject hint;
+    public GameObject hint;
     public float radius;
     public LayerMask _mask;
     void Start()

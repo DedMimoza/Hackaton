@@ -75,7 +75,6 @@ public class Character : MonoBehaviour
         // The speed on the x-z plane ignoring any speed
         float horizontalSpeed = horizontalVelocity.magnitude;
         
-        Debug.Log(horizontalSpeed);
         _animator.SetFloat("Speed", horizontalSpeed);
 
 

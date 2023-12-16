@@ -6,6 +6,8 @@ using TMPro;
 
 public class Enemy : MonoBehaviour
 {
+
+    public Transform dest;
     public GameObject danger;
 
     public NavMeshAgent _navMeshAgent;
@@ -23,6 +25,9 @@ public class Enemy : MonoBehaviour
     [SerializeField, Range(0,10f)] public float radius;
     [SerializeField,Range(0, 360f)] public float angle;
 
+
+    private GameObject SoundMan;
+    
     private Character comoponentOfMainHero;
 
     //Sound
@@ -30,13 +35,21 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        dest = transform;
         playerRef = GameObject.FindGameObjectWithTag("Player");
         comoponentOfMainHero = playerRef.GetComponent<Character>();
         StartCoroutine(FOVRoutine());
 
         soundActivator = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<SoundActivator>();
         soundActivator.isPhone = true;
+
+
+
+        SoundMan = GameObject.Find("SoundManager");
+        SoundMan.GetComponent<Dangeer>().canse.Add(GetComponent<Enemy>());
+        
     }
+    
 
     // Update is called once per frame
     void Update()
@@ -71,6 +84,7 @@ public class Enemy : MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
                 {
+                    dest = target;
                      danger.SetActive(true);
                     _navMeshAgent.speed = 3.5f;   
                     canSeePlayer = true;
@@ -80,7 +94,7 @@ public class Enemy : MonoBehaviour
                     radius = 10f;
                     IdleEnemy.start_pos = transform.position;
 
-                    soundActivator.SwapMusic(danger.activeSelf);
+                    soundActivator.SwapMusic(SoundMan.GetComponent<Dangeer>().isDanger);
                 }
 
                 else
@@ -90,7 +104,7 @@ public class Enemy : MonoBehaviour
                     angle = 60f;
                     radius = comoponentOfMainHero.speed < 3 ? 3f : 5f;
 
-                    soundActivator.SwapMusic(danger.activeSelf);
+                    soundActivator.SwapMusic(SoundMan.GetComponent<Dangeer>().isDanger);
                 }
             }
             else
@@ -108,5 +122,20 @@ public class Enemy : MonoBehaviour
             angle = 60f;
             radius = comoponentOfMainHero.speed < 3 ? 3f : 5f;
         }
+    }
+
+    public void Group(Transform target)
+    {
+        danger.SetActive(true);
+        _navMeshAgent.speed = 3.5f;   
+        canSeePlayer = true;
+        _navMeshAgent.destination = dest.position+new Vector3(UnityEngine.Random.Range(0.2f, 0.5f), 0,
+            UnityEngine.Random.Range(0.2f, 0.5f));
+        transform.LookAt(target);
+        angle = 360f;
+        radius = 10f;
+        IdleEnemy.start_pos = transform.position;
+
+        soundActivator.SwapMusic(SoundMan.GetComponent<Dangeer>().isDanger);
     }
 }
